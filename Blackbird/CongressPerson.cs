@@ -7,11 +7,26 @@ namespace Blackbird;
 
 public class CongressPerson
 {
+    [JsonPropertyName("bioguideId")]
+    public string? BioguideId { get; set; }
+
+    [JsonPropertyName("birthYear")]
+    public int? BirthYear { get; set; }
+
+    [JsonPropertyName("cosponsoredLegislation")]
+    public LegislationReference? CosponsoredLegislation {get; set;}
+    
+    [JsonPropertyName("sponsoredLegislation")]
+    public LegislationReference? SponsoredLegislation {get; set;}
+
     [JsonPropertyName("district")]
     public int? District { get; set; }
 
     [JsonPropertyName("partyName")]
     public string? PartyName { get; set; }
+
+    [JsonPropertyName("partyHistory")]
+    public List<PartyHistory>? PartyHistory { get; set; }
 
     [JsonPropertyName("state")]
     public string? State { get; set; }
@@ -19,8 +34,6 @@ public class CongressPerson
     // [JsonPropertyName("terms")]
     // public List<Term>? Terms { get; set; }
 
-    [JsonPropertyName("bioguideId")]
-    public string? BioguideId { get; set; }
 
     [JsonPropertyName("depiction")]
     public CongressDepiction? Depiction {get; set;}
@@ -30,6 +43,10 @@ public class CongressPerson
 
     [JsonPropertyName("url")]
     public string? Url { get; set; }
+
+    [JsonPropertyName("honorificName")]
+    public string? HonorificName { get; set; }
+
 
     public string LastName {
         get {
@@ -91,4 +108,28 @@ public class Term {
             }
         }
     }
+}
+
+public class LegislationReference {
+    [JsonPropertyName("count")]
+    public int Count {get; set;}
+
+    [JsonPropertyName("URL")]
+    public string? Url { get; set; }
+}
+
+public class AddressInformation
+{
+    public string? City { get; set; }
+    public string? District { get; set; }
+    public string? OfficeAddress { get; set; }
+    public string? PhoneNumber { get; set; }
+    public int ZipCode { get; set; }
+}
+
+public class PartyHistory
+{
+    public string? PartyAbbreviation { get; set; }
+    public string? PartyName { get; set; }
+    public int StartYear { get; set; }
 }
