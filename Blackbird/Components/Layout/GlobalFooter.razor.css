@@ -1,0 +1,6 @@
+.g-footer {
+    --baseTextColor: var(--colorNeutralLighter);
+    color: var(--baseTextColor);
+    padding: .618em .618rem;
+    background-color: var(--colorNeutralDarker);
+}    

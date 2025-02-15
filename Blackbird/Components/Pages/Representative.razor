@@ -1,0 +1,20 @@
+@page "/representative/{bioguideId}"
+@rendermode InteractiveServer
+@using System.Text.Json
+@using System.Text.Json.Serialization
+@inject HttpClient Client
+
+<PageTitle>Congress</PageTitle>
+
+<section class="representative">
+    <header class="representative__header">
+        <h1 class="representative__name">
+
+        </h1>
+    </header>
+</section>
+
+@code {
+    [Parameter]
+    public string? bioguideId {get; set;}
+}

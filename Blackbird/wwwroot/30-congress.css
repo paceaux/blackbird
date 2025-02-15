@@ -1,0 +1,89 @@
+@layer components {
+.congress {
+
+    --republicanPartyColor: rgb(232, 27, 35);
+    --democraticPartyColor: rgb(8,58,144);
+    --neutralPartyColor: rgb(120, 120, 120);
+    
+    margin-bottom: var(--baseSpacingVertical);
+}
+
+
+.congress__header {
+    
+}
+
+.congress__title {
+    
+}
+
+.congress .field__submit {
+    --controlBackgroundColor: var(--colorCoolRich);
+    --controlColor: var(--colorWarmDarkest);
+}
+
+.congress__members {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: .618em 1.618rem;
+    margin-top: 1.618em;
+    animation-name: fadein;
+
+}
+
+.congressPerson {
+    --partyColor: var(--neutralPartyColor);
+    flex-basis: calc(33% - (1.618rem * 2));
+    flex-grow: 1;
+    padding: .618em;
+    background-color: hsl(350deg 50% 98%);
+    border: 3px solid;
+    border-radius: 6px;
+    border-color: var(--partyColor);
+    animation-name: fadein;
+    animation-duration: 0.75s;
+    animation-timing-function: ease-in;
+    animation-iteration-count: 1;
+    animation-direction: linear;
+
+}
+
+.congressPerson--democratic {
+    --partyColor: var(--democraticPartyColor);
+}
+
+.congressPerson--republican {
+    --partyColor: var(--republicanPartyColor);
+}
+
+.congressPerson__header {
+
+}
+
+.congressPerson__name {
+    margin-bottom: 0;
+}
+
+.congressPerson__content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: .618em .618rem;
+}
+
+.congressPerson__depiction {
+    flex-basis: 50%;
+    max-height: 228px;
+    object-fit: cover;
+}
+
+.congressPerson__info {
+    flex-basis: 50%;
+    flex-grow: 1;
+    padding: 0;
+}
+}
+
+
+

@@ -1,0 +1,53 @@
+@page "/todo"
+@rendermode InteractiveServer
+
+<PageTitle>Todo</PageTitle>
+
+<section class="todos">
+    <header class="todos__header">
+        <label for="todo-input">Add a new todo</label>
+        <input type="text" placeholder="Do something" id="todo-input" @bind="newTodo"/>
+        
+        <button @onclick="AddTodo">Add Todo</button>
+    </header>
+
+    <ul class="todos__list">
+        @foreach (var todo in todos)
+        {
+            <li class="todos__item" data-index="@todo.Id">
+                @todo.Title
+                <button value="@todo.Title" @onclick="@(e => RemoveTodo(todo.Id))">Remove</button>
+            </li>
+        }
+    </ul>
+</section>
+
+@code {
+    private string? newTodo;
+    private List<TodoItem> todos = [];
+    
+    private void AddTodo() 
+    {
+        if (!string.IsNullOrWhiteSpace(newTodo))
+        {
+
+            int nextId = todos.Count + 1;
+            todos.Add(new TodoItem { Title = newTodo, Id = nextId, CreatedAt = DateTime.Now });
+            newTodo = string.Empty;
+        }
+    }
+
+    private void RemoveTodo(int todoId)
+    {
+        for (int i = 0; i < todos.Count; i++) 
+        {
+            if (todos[i].Id == todoId) {
+                todos.RemoveAt(i);
+                break;
+            }
+        }
+    }
+    
+
+}
+

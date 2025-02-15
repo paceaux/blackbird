@@ -1,0 +1,25 @@
+.nav {
+    display: flex;
+}
+
+.nav--horizontal {
+    flex-direction: row;
+}
+
+.nav--vertical {
+    flex-direction: column;
+}
+
+.nav__items {
+    display: inherit;
+    flex-direction: inherit;
+    gap: .618rem;
+}
+
+.nav__item {
+    display: inline-block;
+}
+
+.nav__link {
+    padding: .618em .618rem;
+}

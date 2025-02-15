@@ -1,0 +1,33 @@
+@layer layout{
+
+html,
+body {
+    min-height: 100vh;
+}
+
+.g-header {
+    width: 100%;
+    height: 3.5rem;
+}
+
+@media screen and (width > 768px) {
+    body {
+        display: grid;
+        grid-template-columns: 10% auto 10%;
+        grid-template-rows: 3.5rem auto 7rem;
+        grid-template-areas: ". header ." ". main ." "footer footer footer";
+    }
+
+    .g-header {
+        grid-area: header;
+    }
+
+    .g-main {
+        grid-area: main;
+    }
+
+    .g-footer {
+        grid-area: footer;
+    }
+}
+}

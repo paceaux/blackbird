@@ -1,0 +1,124 @@
+﻿@page "/congress"
+@rendermode InteractiveServer
+@using System.Text.Json
+@using System.Text.Json.Serialization
+@inject HttpClient Client
+
+<PageTitle>Congress</PageTitle>
+
+<section class="congress">
+    <header class="congress__header">
+        <h1 class="congress__title">Find your Representatives</h1>
+        <div class="congress__stateField stateField field">
+            <label for="state-selector" class="field__label">Select your state</label>
+            <select id="state-selector" 
+                class="field__control" 
+                @bind="selectedState"
+                >
+                <option value="">Select a state</option>
+                <hr />
+            @foreach (var state in StateArray.States()) 
+                {
+                    <option value="@state.Abbreviations">@state.Name</option>
+                }
+            </select>
+            <button @onclick="GetCongressPeople" class="field__submit">Go!</button>
+        </div>
+        <div class="congress__sponsoredBills congress__sponsoredBills@(hasSponsoredBills ? "--loaded" : "waiting")">
+            @if(hasSponsoredBills) {
+                @foreach(var bill in sponsoredBills) {
+                   <dl>
+                    <dt>Number</dt>
+                    <dd>@bill.Number</dd>
+                    <dt>title</dt>
+                    <dd>@bill.Title</dd>
+                   </dl> 
+                }
+            }
+        </div>
+    </header>
+    <div class="congress__members">
+        @if (hasError || members is null) {
+            <p>There was an error getting Congress members for your state</p>
+        } else {
+            @foreach (var congressPerson in members) {
+                <article 
+                    class="congressPerson @($"congressPerson--{congressPerson.PartyName.ToLower()}")" 
+                    data-bioguide="@congressPerson.BioguideId"
+                    >
+                    <header class="congressPerson__header">
+                        <h3 class="congressPerson__name">@congressPerson.FirstName @congressPerson.LastName</h3>
+                        <p class="congressPerson__party">@congressPerson.PartyName</p>
+                        <button class="congressPerson__getSponsored" value="@congressPerson.BioguideId" @onclick="() => GetSponsoredBills(congressPerson.BioguideId) ">Sponsored Legislation</button>
+                    </header>
+                    <div class="congressPerson__content">
+
+                        @if (!(congressPerson.Depiction is null) && !(congressPerson.Depiction.ImageUrl is null)) {
+                            <img class="congressPerson__depiction" src="@congressPerson.Depiction.ImageUrl" alt="@congressPerson.Name" />
+                        }
+                        <dl class="congressPerson__info">
+                            <dt>District</dt>
+                            <dd>@congressPerson.District</dd>
+
+                        </dl>
+                    </div>
+                    <div></div>
+                </article>
+            }
+        }
+    </div> 
+</section>
+
+@code {
+/*
+    https://learn.microsoft.com/en-us/aspnet/core/blazor/call-web-api?view=aspnetcore-9.0
+
+*/
+private bool shouldRender;
+private bool hasError;
+private string? selectedState;
+private string apiKey = "yG1ifYPkVFhrJdb7u3DMjPSO4yc19AkfJAKVhF51";
+private List<CongressPerson>? members = [];
+protected override bool ShouldRender() => shouldRender;
+
+private bool hasSponsoredBills = false;
+
+private List<SponsoredLegislation>? sponsoredBills = [];
+
+public async Task GetCongressPeople() 
+{
+    if (!string.IsNullOrWhiteSpace(selectedState)) {
+        try {
+            var memberReponse = await CongressApi.GetMembersByState(selectedState);
+
+            if (memberReponse is not null) {
+                members = memberReponse.Members;
+            } else {
+                hasError = true;
+            }
+        } catch (Exception) {
+
+        }
+        shouldRender = true;
+    }
+}
+
+public async Task GetSponsoredBills(string bioguideId) {
+    if (!string.IsNullOrWhiteSpace(bioguideId)) {
+        try {
+            var sponsoredLegislationResponse = await CongressApi.GetSponsoredLegislation(bioguideId);
+
+            if (sponsoredLegislationResponse is not null) {
+                hasSponsoredBills = true;
+                sponsoredBills = sponsoredLegislationResponse.SponsoredLegislations;
+            } else {
+                hasError = true;
+            }
+        } catch (Exception) {
+
+        }
+    }
+}
+
+
+}

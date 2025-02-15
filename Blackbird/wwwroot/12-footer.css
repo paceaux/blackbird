@@ -1,0 +1,33 @@
+@layer layout {
+.g-footer {
+    --baseTextColor: var(--colorNeutralLightest);
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: 10vw repeat(3, 1fr) 10vw ;
+    grid-template-areas: ". brand . legal .";
+    color: var(--baseTextColor);
+    padding: .618em 0;
+    background-color: var(--colorWarmDarkest);
+}
+
+.g-footer__brand {
+    grid-area: brand;
+}
+
+.g-footer__legal {
+    grid-area: legal;
+}
+
+.g-footer__title {
+    color: var(--colorCoolRich);
+}
+
+.g-footer__actionMark {
+    font-size: var(--smallTextSize);
+}
+
+.g-footer__social-link {
+    --baseLinkColor: var(--colorCoolRich);
+    --baseLinkColorHover: var(--colorNeutralLightest);
+}
+}

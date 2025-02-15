@@ -1,0 +1,9 @@
+@keyframes fadein {
+    0% {
+        color: rgba(0, 0, 0, 0.01);
+    }
+
+    100% {
+        color: rgba(55, 55, 55, 1);
+    }
+}
