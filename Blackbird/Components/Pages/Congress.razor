@@ -49,7 +49,7 @@
                     <header class="congressPerson__header">
                         <h3 class="congressPerson__name">@congressPerson.FirstName @congressPerson.LastName</h3>
                         <p class="congressPerson__party">@congressPerson.PartyName</p>
-                        <button class="congressPerson__getSponsored" value="@congressPerson.BioguideId" @onclick="() => GetSponsoredBills(congressPerson.BioguideId) ">Sponsored Legislation</button>
+                        <a href="/representative/@(congressPerson.BioguideId)">See full profile</a>
                     </header>
                     <div class="congressPerson__content">
 
