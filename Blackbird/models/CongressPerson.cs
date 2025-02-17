@@ -44,11 +44,6 @@ public class CongressPerson
     [JsonPropertyName("url")]
     public string? Url { get; set; }
 
-    [JsonPropertyName("directOrderName")]
-    public string? DirectOrderName {get; set;}
-
-    [JsonPropertyName("honorificName")]
-    public string? HonorificName { get; set; }
 
 
     /*
@@ -57,8 +52,8 @@ public class CongressPerson
 
         But in the member/state endpoint, we only get the reversed last name
     */
-    private string firstName;
-    private string lastName;
+    private string? firstName;
+    private string? lastName;
 
     [JsonPropertyName("lastName")]
     public string LastName {
@@ -118,54 +113,4 @@ public class CongressPerson
 
 }
 
-public class Term {
-    [JsonPropertyName("chamber")]
-    public string? Chamber { get; set; }
 
-    [JsonPropertyName("endYear")]
-    public int EndYear { get; set; }
-
-    [JsonPropertyName("startYear")]
-    public int StartYear { get; set; }
-
-    // public bool HasFinishedTerm {
-    //     get {
-    //         return EndYear > 0 && StartYear > 0;
-    //     }
-    // }
-
-    // public int TimeInOffice {
-    //     get {
-    //         int currentYear = DateTime.Now.Year;
-    //         if (HasFinishedTerm) {
-    //             return EndYear - StartYear;
-    //         } else {
-    //             return currentYear - StartYear;
-    //         }
-    //     }
-    // }
-}
-
-public class LegislationReference {
-    [JsonPropertyName("count")]
-    public int Count {get; set;}
-
-    [JsonPropertyName("URL")]
-    public string? Url { get; set; }
-}
-
-public class AddressInformation
-{
-    public string? City { get; set; }
-    public string? District { get; set; }
-    public string? OfficeAddress { get; set; }
-    public string? PhoneNumber { get; set; }
-    public int ZipCode { get; set; }
-}
-
-public class PartyHistory
-{
-    public string? PartyAbbreviation { get; set; }
-    public string? PartyName { get; set; }
-    public int StartYear { get; set; }
-}

@@ -24,6 +24,7 @@
     protected override async Task OnInitializedAsync()
     {
         if (!string.IsNullOrEmpty(bioguideId)) {
+            Console.WriteLine($"bioguide id is {bioguideId}");
             try {
                 var memberReponse = await CongressApi.GetMember(bioguideId);
                 if (memberReponse is not null) {
