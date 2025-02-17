@@ -28,8 +28,8 @@ public class CongressPerson
     [JsonPropertyName("partyHistory")]
     public List<PartyHistory>? PartyHistory { get; set; }
 
-    [JsonPropertyName("state")]
-    public string? State { get; set; }
+    // [JsonPropertyName("state")]
+    // public string? State { get; set; }
 
     // [JsonPropertyName("terms")]
     // public List<Term>? Terms { get; set; }
@@ -44,32 +44,68 @@ public class CongressPerson
     [JsonPropertyName("url")]
     public string? Url { get; set; }
 
+    [JsonPropertyName("directOrderName")]
+    public string? DirectOrderName {get; set;}
+
     [JsonPropertyName("honorificName")]
     public string? HonorificName { get; set; }
 
 
+    /*
+        complex getters/setters for first/last name is because in the 
+        member/bioguideId endpoint, we get an actual firstName/lastName
+
+        But in the member/state endpoint, we only get the reversed last name
+    */
+    private string firstName;
+    private string lastName;
+
+    [JsonPropertyName("lastName")]
     public string LastName {
         get {
+            if (!string.IsNullOrEmpty(lastName))
+            {
+                return lastName;
+            }         
             string name = Name;
-            if (name != null) {
+            if (name != null) 
+            {
+                string[] nameParts = name.Split(",");
+                return nameParts[0];
+            } 
+            else
+            {
+                return "";
+            }
+            
+        }
 
-            string[] nameParts = name.Split(",");
-            return nameParts[0];
-            } else {
+        set  {
+            lastName = value;
+        }
+    }
+
+    [JsonPropertyName("firstName")]
+    public string FirstName {
+        get {
+            if (!string.IsNullOrEmpty(firstName))
+            {
+                return firstName;
+            }
+
+            string name = Name;
+            if (name != null)
+            {
+                string[] nameParts = name.Split(",");
+                return nameParts[1];
+            }
+            else
+            {
                 return "";
             }
         }
-    }
-    public string FirstName {
-        get {
-            string name = Name;
-            if (name != null) {
-
-            string[] nameParts = name.Split(",");
-            return nameParts[1];
-            } else {
-                return "";
-            }
+        set {
+            firstName = value;
         }
     }
 
@@ -92,22 +128,22 @@ public class Term {
     [JsonPropertyName("startYear")]
     public int StartYear { get; set; }
 
-    public bool HasFinishedTerm {
-        get {
-            return EndYear > 0 && StartYear > 0;
-        }
-    }
+    // public bool HasFinishedTerm {
+    //     get {
+    //         return EndYear > 0 && StartYear > 0;
+    //     }
+    // }
 
-    public int TimeInOffice {
-        get {
-            int currentYear = DateTime.Now.Year;
-            if (HasFinishedTerm) {
-                return EndYear - StartYear;
-            } else {
-                return currentYear - StartYear;
-            }
-        }
-    }
+    // public int TimeInOffice {
+    //     get {
+    //         int currentYear = DateTime.Now.Year;
+    //         if (HasFinishedTerm) {
+    //             return EndYear - StartYear;
+    //         } else {
+    //             return currentYear - StartYear;
+    //         }
+    //     }
+    // }
 }
 
 public class LegislationReference {

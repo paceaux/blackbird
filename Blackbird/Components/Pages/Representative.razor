@@ -2,19 +2,39 @@
 @rendermode InteractiveServer
 @using System.Text.Json
 @using System.Text.Json.Serialization
-@inject HttpClient Client
 
-<PageTitle>Congress</PageTitle>
+<PageTitle>Congress| @bioguideId</PageTitle>
 
 <section class="representative">
     <header class="representative__header">
-        <h1 class="representative__name">
-
+        <h1 class="representative__name" data-bioguideid="@bioguideId">
+            @if (congressPerson is not null) {
+                @congressPerson.HonorificName
+            }
         </h1>
     </header>
 </section>
 
 @code {
+    public CongressPersonBio? congressPerson;
+
     [Parameter]
     public string? bioguideId {get; set;}
+    public bool shouldRender;
+    protected override async Task OnInitializedAsync()
+    {
+        if (!string.IsNullOrEmpty(bioguideId)) {
+            try {
+                var memberReponse = await CongressApi.GetMember(bioguideId);
+                if (memberReponse is not null) {
+                    congressPerson = memberReponse.Member;
+                } else {
+                    shouldRender = false;
+                }
+                await base.OnInitializedAsync();
+            } catch (Exception) {
+                Console.WriteLine($"Well fiddlesticks. Couldn't get the data for {bioguideId} ");
+            }
+        }
+    }
 }
